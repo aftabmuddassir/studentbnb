@@ -1,6 +1,7 @@
-package com.studentbnb.auth_service.dto;
+package com.studentbnb.auth.dto;
 
-import com.studentbnb.auth_service.entity.UserRole;
+import com.studentbnb.auth.entity.UserRole;
+
 import lombok.Data;
 
 @Data

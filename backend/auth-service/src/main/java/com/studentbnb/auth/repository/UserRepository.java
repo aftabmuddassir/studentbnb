@@ -1,8 +1,10 @@
-package com.studentbnb.auth_service.repository;
+package com.studentbnb.auth.repository;
 
-import com.studentbnb.auth_service.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.studentbnb.auth.entity.User;
+
 import java.util.Optional;
 
 @Repository

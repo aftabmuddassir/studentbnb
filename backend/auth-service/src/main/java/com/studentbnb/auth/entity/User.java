@@ -1,4 +1,4 @@
-package com.studentbnb.auth_service.entity;
+package com.studentbnb.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

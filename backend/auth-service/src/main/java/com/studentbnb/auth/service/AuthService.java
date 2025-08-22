@@ -1,14 +1,15 @@
-package com.studentbnb.auth_service.service;
+package com.studentbnb.auth.service;
 
 
-import com.studentbnb.auth_service.dto.LoginRequest;
-import com.studentbnb.auth_service.dto.RegisterRequest;
-import com.studentbnb.auth_service.entity.User;
-import com.studentbnb.auth_service.entity.UserRole;
-import com.studentbnb.auth_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.studentbnb.auth.dto.LoginRequest;
+import com.studentbnb.auth.dto.RegisterRequest;
+import com.studentbnb.auth.entity.User;
+import com.studentbnb.auth.entity.UserRole;
+import com.studentbnb.auth.repository.UserRepository;
 
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
-package com.studentbnb.auth_service.config;
+package com.studentbnb.auth.config;
 
-import com.studentbnb.auth_service.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.studentbnb.auth.service.JwtService;
 
 import java.io.IOException;
 import java.util.Collections;

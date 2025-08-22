@@ -1,10 +1,4 @@
-package com.studentbnb.auth_service.controller;
-
-import com.studentbnb.auth_service.dto.LoginRequest;
-import com.studentbnb.auth_service.dto.RegisterRequest;
-import com.studentbnb.auth_service.entity.User;
-import com.studentbnb.auth_service.service.AuthService;
-import com.studentbnb.auth_service.service.JwtService;
+package com.studentbnb.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import com.studentbnb.auth.dto.LoginRequest;
+import com.studentbnb.auth.dto.RegisterRequest;
+import com.studentbnb.auth.entity.User;
+import com.studentbnb.auth.service.AuthService;
+import com.studentbnb.auth.service.JwtService;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.studentbnb.auth_service.controller;
+package com.studentbnb.auth.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

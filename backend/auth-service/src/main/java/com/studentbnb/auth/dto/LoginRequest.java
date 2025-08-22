@@ -1,4 +1,4 @@
-package com.studentbnb.auth_service.dto;
+package com.studentbnb.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.studentbnb.auth_service.config;
+package com.studentbnb.auth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,5 @@
-package com.studentbnb.auth_service.service;
+package com.studentbnb.auth.service;
 
-import com.studentbnb.auth_service.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,6 +7,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.studentbnb.auth.entity.User;
 
 import java.security.Key;
 import java.util.Date;
