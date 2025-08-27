@@ -92,10 +92,12 @@ public class UserService {
         
         if (profileOpt.isPresent()) {
             return Optional.of(convertToProfileResponse(user, profileOpt.get()));
-        } else {
-            // Return basic user info even if no profile exists
-            return Optional.of(convertToBasicProfileResponse(user));
-        }
+        } 
+         if (profileOpt.isEmpty()) {
+        return Optional.empty(); // No profile = 404
+    }
+    
+    return Optional.of(convertToProfileResponse(userOpt.get(), profileOpt.get()));
     }
 
     // Update user profile

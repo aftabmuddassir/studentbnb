@@ -2,13 +2,18 @@ package com.studentbnb.user_service.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.studentbnb.user_service.entity.User;
+
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -16,6 +21,9 @@ public class JwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
+
+    @Value("${jwt.expiration:86400000}") // 24 hours default
+    private long jwtExpiration;
 
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -25,6 +33,38 @@ public class JwtService {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
+     // Add the missing generateToken methods
+    public String generateToken(User user) {
+        return generateToken(new HashMap<>(), user);
+    }
+
+    public String generateToken(Map<String, Object> extraClaims, User user) {
+        return buildToken(extraClaims, user, jwtExpiration);
+    }
+
+
+    private String buildToken(
+            Map<String, Object> extraClaims,
+            User user,
+            long expiration
+    ) {
+        // Add user-specific claims
+        extraClaims.put("userId", user.getId());
+        extraClaims.put("role", user.getRole().toString());
+        
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(user.getEmail())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+    
+
+
 
     public boolean isTokenValid(String token, String email) {
         final String tokenEmail = extractEmail(token);
