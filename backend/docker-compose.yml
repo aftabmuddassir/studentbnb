@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database (shared by all services)
+  postgres:
+    image: postgres:15
+    container_name: studentbnb-postgres
+    environment:
+      POSTGRES_DB: studentbnb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - studentbnb-network
+
+  # Redis for caching (future use)
+  redis:
+    image: redis:7-alpine
+    container_name: studentbnb-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - studentbnb-network
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: studentbnb-auth-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DATABASE_URL: jdbc:postgresql://postgres:5432/studentbnb
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      JWT_SECRET: ${JWT_SECRET:-mySecretKey123456789mySecretKey123456789}
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    networks:
+      - studentbnb-network
+    volumes:
+      - ./logs/auth:/app/logs
+
+  # User Service
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: studentbnb-user-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DATABASE_URL: jdbc:postgresql://postgres:5432/studentbnb
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      JWT_SECRET: ${JWT_SECRET:-mySecretKey123456789mySecretKey123456789}
+      AUTH_SERVICE_URL: http://auth-service:8081
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+      - auth-service
+    networks:
+      - studentbnb-network
+    volumes:
+      - ./logs/user:/app/logs
+
+  # Listing Service
+  listing-service:
+    build:
+      context: ./listing-service
+      dockerfile: Dockerfile
+    container_name: studentbnb-listing-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DATABASE_URL: jdbc:postgresql://postgres:5432/studentbnb
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      JWT_SECRET: ${JWT_SECRET:-mySecretKey123456789mySecretKey123456789}
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+    networks:
+      - studentbnb-network
+    volumes:
+      - ./logs/listing:/app/logs
+
+  # Frontend (Future)
+  # frontend:
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: Dockerfile
+  #   container_name: studentbnb-frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - auth-service
+  #     - user-service
+  #     - listing-service
+  #   networks:
+  #     - studentbnb-network
+
+volumes:
+  postgres_data:
+
+networks:
+  studentbnb-network:
+    driver: bridge
