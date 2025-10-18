@@ -1,0 +1,80 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: #f7fafc;
+}
+
+.dashboard-nav {
+  background: white;
+  padding: 16px 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-nav h1 {
+  margin: 0;
+  color: #667eea;
+  font-size: 24px;
+}
+
+.btn-logout {
+  padding: 10px 20px;
+  background: #f56565;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover {
+  background: #e53e3e;
+}
+
+.dashboard-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.welcome-card {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.welcome-card h2 {
+  margin: 0 0 24px 0;
+  color: #1a202c;
+  font-size: 32px;
+  text-align: center;
+}
+
+.user-info {
+  background: #f7fafc;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 24px 0;
+}
+
+.user-info p {
+  margin: 12px 0;
+  color: #2d3748;
+  font-size: 16px;
+}
+
+.user-info strong {
+  color: #667eea;
+  margin-right: 8px;
+}
+
+.success-message {
+  text-align: center;
+  color: #48bb78;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 24px 0 0 0;
+}
