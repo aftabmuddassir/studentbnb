@@ -25,18 +25,22 @@ public class SecurityConfig {
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Public endpoints - no authentication required
+                // Public endpoints - no authentication required (GET only)
                 .requestMatchers("/api/listings/health", "/api/listings/public/**").permitAll()
                 .requestMatchers("/api/listings/search", "/api/listings/nearby", "/api/listings/university/**").permitAll()
-                .requestMatchers("/api/listings/{id}").permitAll() // Public listing view
-                .requestMatchers("/api/listings").permitAll() // Public listing browse
-                
-                // Landlord-specific endpoints
-                .requestMatchers("/api/listings/my-listings/**").hasRole("LANDLORD")
-                .requestMatchers("/api/listings/*/photos").hasRole("LANDLORD")
-                .requestMatchers("/api/listings/*/amenities").hasRole("LANDLORD")
-                
-                // Student-specific endpoints
+                .requestMatchers("/api/listings/amenities/types").permitAll() // Public amenity types
+                .requestMatchers("/api/listings/{id:[0-9]+}").permitAll() // Public listing view (GET only)
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/listings").permitAll() // Public listing browse
+
+                // Listing creation and management endpoints (both Landlords and Students can create/manage listings)
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/listings").hasAnyRole("LANDLORD", "STUDENT") // Create listing
+                .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/listings/*").hasAnyRole("LANDLORD", "STUDENT") // Update listing
+                .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/listings/*").hasAnyRole("LANDLORD", "STUDENT") // Delete listing
+                .requestMatchers("/api/listings/my-listings/**").hasAnyRole("LANDLORD", "STUDENT")
+                .requestMatchers("/api/listings/*/photos/**").hasAnyRole("LANDLORD", "STUDENT")
+                .requestMatchers("/api/listings/*/amenities/**").hasAnyRole("LANDLORD", "STUDENT")
+
+                // Student-specific endpoints (favorites and inquiries)
                 .requestMatchers("/api/listings/*/favorite").hasRole("STUDENT")
                 .requestMatchers("/api/listings/favorites").hasRole("STUDENT")
                 .requestMatchers("/api/listings/*/inquiry").hasRole("STUDENT")
