@@ -51,7 +51,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/register", "/api/auth/login", "/api/auth/refresh", "/api/auth/google").permitAll()
                 .requestMatchers("/api/auth/users").permitAll() // Will Remove this later ( for development purpose)
-                .requestMatchers("/api/auth/profile").authenticated() // Protected endpoint
+                .requestMatchers("/api/auth/profile", "/api/auth/profile/details").authenticated() // Protected endpoints
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

@@ -47,6 +47,21 @@ const authService = {
     }
     return {};
   },
+
+  // Profile management
+  getProfileDetails: async () => {
+    const response = await axios.get(`${API_URL}/profile/details`, {
+      headers: authService.getAuthHeader(),
+    });
+    return response.data;
+  },
+
+  updateProfile: async (profileData) => {
+    const response = await axios.put(`${API_URL}/profile`, profileData, {
+      headers: authService.getAuthHeader(),
+    });
+    return response.data;
+  },
 };
 
 export default authService;

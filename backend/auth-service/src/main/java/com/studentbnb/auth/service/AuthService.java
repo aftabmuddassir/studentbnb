@@ -101,4 +101,43 @@ public class AuthService {
         // Password must contain at least one letter and one number
         return password.matches(".*[a-zA-Z].*") && password.matches(".*[0-9].*");
     }
+
+    public User updateUserProfile(Long userId, com.studentbnb.auth.dto.UpdateProfileRequest request) throws IllegalArgumentException {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Update only provided fields
+        if (request.getFirstName() != null) {
+            user.setFirstName(request.getFirstName().trim());
+        }
+        if (request.getLastName() != null) {
+            user.setLastName(request.getLastName().trim());
+        }
+        if (request.getPhoneNumber() != null) {
+            user.setPhoneNumber(request.getPhoneNumber().trim());
+        }
+        if (request.getBio() != null) {
+            user.setBio(request.getBio().trim());
+        }
+        if (request.getUniversity() != null) {
+            user.setUniversity(request.getUniversity().trim());
+        }
+        if (request.getGraduationYear() != null) {
+            user.setGraduationYear(request.getGraduationYear());
+        }
+        if (request.getCity() != null) {
+            user.setCity(request.getCity().trim());
+        }
+        if (request.getState() != null) {
+            user.setState(request.getState().trim());
+        }
+        if (request.getCountry() != null) {
+            user.setCountry(request.getCountry().trim());
+        }
+        if (request.getZipcode() != null) {
+            user.setZipcode(request.getZipcode().trim());
+        }
+
+        return userRepository.save(user);
+    }
 }

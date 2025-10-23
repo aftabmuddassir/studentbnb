@@ -21,6 +21,10 @@ function Dashboard() {
     navigate('/login');
   };
 
+  const handleViewProfile = () => {
+    navigate('/profile');
+  };
+
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -29,9 +33,14 @@ function Dashboard() {
     <div className="dashboard-container">
       <nav className="dashboard-nav">
         <h1>StudentBnB</h1>
-        <button onClick={handleLogout} className="btn-logout">
-          Logout
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button onClick={handleViewProfile} className="btn-profile">
+            Profile
+          </button>
+          <button onClick={handleLogout} className="btn-logout">
+            Logout
+          </button>
+        </div>
       </nav>
 
       <div className="dashboard-content">

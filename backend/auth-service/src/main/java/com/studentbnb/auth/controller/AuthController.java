@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import com.studentbnb.auth.dto.GoogleLoginRequest;
 import com.studentbnb.auth.dto.LoginRequest;
 import com.studentbnb.auth.dto.RegisterRequest;
+import com.studentbnb.auth.dto.UpdateProfileRequest;
+import com.studentbnb.auth.dto.UserProfileResponse;
 import com.studentbnb.auth.entity.User;
 import com.studentbnb.auth.service.AuthService;
 import com.studentbnb.auth.service.GoogleOAuthService;
@@ -185,9 +187,85 @@ public class AuthController {
         }
     }
 
-    
+    // Update user profile endpoint
+    @PutMapping("/profile")
+    public ResponseEntity<?> updateProfile(@RequestBody UpdateProfileRequest request) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
 
+            User user = authService.findUserByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+            User updatedUser = authService.updateUserProfile(user.getId(), request);
 
+            // Convert to response DTO
+            UserProfileResponse profile = new UserProfileResponse();
+            profile.setId(updatedUser.getId());
+            profile.setEmail(updatedUser.getEmail());
+            profile.setRole(updatedUser.getRole());
+            profile.setFirstName(updatedUser.getFirstName());
+            profile.setLastName(updatedUser.getLastName());
+            profile.setPhoneNumber(updatedUser.getPhoneNumber());
+            profile.setProfilePictureUrl(updatedUser.getProfilePictureUrl());
+            profile.setBio(updatedUser.getBio());
+            profile.setUniversity(updatedUser.getUniversity());
+            profile.setGraduationYear(updatedUser.getGraduationYear());
+            profile.setCity(updatedUser.getCity());
+            profile.setState(updatedUser.getState());
+            profile.setCountry(updatedUser.getCountry());
+            profile.setZipcode(updatedUser.getZipcode());
+            profile.setEmailVerified(updatedUser.getEmailVerified());
+            profile.setCreatedAt(updatedUser.getCreatedAt());
+            profile.setUpdatedAt(updatedUser.getUpdatedAt());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Profile updated successfully");
+            response.put("profile", profile);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Profile update failed: " + e.getMessage()));
+        }
+    }
+
+    // Get full user profile (enhanced version of existing /profile endpoint)
+    @GetMapping("/profile/details")
+    public ResponseEntity<?> getProfileDetails() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String email = authentication.getName();
+
+            User user = authService.findUserByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+            UserProfileResponse profile = new UserProfileResponse();
+            profile.setId(user.getId());
+            profile.setEmail(user.getEmail());
+            profile.setRole(user.getRole());
+            profile.setFirstName(user.getFirstName());
+            profile.setLastName(user.getLastName());
+            profile.setPhoneNumber(user.getPhoneNumber());
+            profile.setProfilePictureUrl(user.getProfilePictureUrl());
+            profile.setBio(user.getBio());
+            profile.setUniversity(user.getUniversity());
+            profile.setGraduationYear(user.getGraduationYear());
+            profile.setCity(user.getCity());
+            profile.setState(user.getState());
+            profile.setCountry(user.getCountry());
+            profile.setZipcode(user.getZipcode());
+            profile.setEmailVerified(user.getEmailVerified());
+            profile.setCreatedAt(user.getCreatedAt());
+            profile.setUpdatedAt(user.getUpdatedAt());
+
+            return ResponseEntity.ok(profile);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Failed to fetch profile: " + e.getMessage()));
+        }
+    }
 
 }
