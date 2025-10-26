@@ -20,6 +20,9 @@ public class CorsConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:3000",  // React dev server
             "http://localhost:3001",  // Alternative React port
+            "http://localhost:5173",  // Vite dev server 1
+            "http://localhost:5174",  // Vite dev server 2
+            "http://localhost:5175",  // Vite dev server 3
             "http://localhost:8080",  // Alternative frontend port
             "https://*.studentbnb.com" // Production domain
         ));

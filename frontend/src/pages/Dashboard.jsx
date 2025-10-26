@@ -25,6 +25,14 @@ function Dashboard() {
     navigate('/profile');
   };
 
+  const handleCreateListing = () => {
+    navigate('/create-listing');
+  };
+
+  const handleMyListings = () => {
+    navigate('/my-listings');
+  };
+
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -34,6 +42,12 @@ function Dashboard() {
       <nav className="dashboard-nav">
         <h1>StudentBnB</h1>
         <div style={{ display: 'flex', gap: '1rem' }}>
+          <button onClick={handleCreateListing} className="btn-create-listing">
+            Create Listing
+          </button>
+          <button onClick={handleMyListings} className="btn-my-listings">
+            My Listings
+          </button>
           <button onClick={handleViewProfile} className="btn-profile">
             Profile
           </button>

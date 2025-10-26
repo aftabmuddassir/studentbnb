@@ -18,6 +18,36 @@
   font-size: 24px;
 }
 
+.btn-create-listing {
+  padding: 10px 20px;
+  background: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-create-listing:hover {
+  background: #38a169;
+}
+
+.btn-my-listings {
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-my-listings:hover {
+  background: #2563eb;
+}
+
 .btn-profile {
   padding: 10px 20px;
   background: #667eea;

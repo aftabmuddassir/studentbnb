@@ -91,14 +91,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(
             RuntimeException ex, WebRequest request) {
-        
+
+        // Log the actual exception for debugging
+        ex.printStackTrace();
+
         ErrorResponse errorResponse = new ErrorResponse(
             "Internal Server Error",
-            "An unexpected error occurred",
+            "An unexpected error occurred: " + ex.getMessage(),
             HttpStatus.INTERNAL_SERVER_ERROR.value(),
             request.getDescription(false).replace("uri=", "")
         );
-        
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 

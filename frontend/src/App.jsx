@@ -5,6 +5,10 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
+import CreateListing from './pages/CreateListing';
+import MyListings from './pages/MyListings';
+import EditListing from './pages/EditListing';
+import ListingDetail from './pages/ListingDetail';
 import './App.css';
 
 // Google OAuth Client ID from environment variables
@@ -21,6 +25,10 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/my-listings" element={<MyListings />} />
+          <Route path="/edit-listing/:id" element={<EditListing />} />
+          <Route path="/listings/:id" element={<ListingDetail />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>

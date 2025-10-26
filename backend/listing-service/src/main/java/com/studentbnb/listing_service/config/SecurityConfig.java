@@ -29,6 +29,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/listings/health", "/api/listings/public/**").permitAll()
                 .requestMatchers("/api/listings/search", "/api/listings/nearby", "/api/listings/university/**").permitAll()
                 .requestMatchers("/api/listings/amenities/types").permitAll() // Public amenity types
+                .requestMatchers("/api/listings/*/preferences/types").permitAll() // Public preference types
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/listings/*/preferences").permitAll() // Public preference view
                 .requestMatchers("/api/listings/{id:[0-9]+}").permitAll() // Public listing view (GET only)
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/listings").permitAll() // Public listing browse
 
@@ -39,6 +41,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/listings/my-listings/**").hasAnyRole("LANDLORD", "STUDENT")
                 .requestMatchers("/api/listings/*/photos/**").hasAnyRole("LANDLORD", "STUDENT")
                 .requestMatchers("/api/listings/*/amenities/**").hasAnyRole("LANDLORD", "STUDENT")
+                .requestMatchers("/api/listings/*/preferences/**").hasAnyRole("LANDLORD", "STUDENT")
 
                 // Student-specific endpoints (favorites and inquiries)
                 .requestMatchers("/api/listings/*/favorite").hasRole("STUDENT")

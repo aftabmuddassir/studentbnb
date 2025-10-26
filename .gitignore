@@ -84,6 +84,8 @@ dist/
 tmp/
 temp/
 
+# Progress tracking files
+progress/
 
-# Spring Boot configuration files 
+# Spring Boot configuration files
 /backend/**/src/main/resources/application.properties

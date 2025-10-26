@@ -161,10 +161,13 @@ public class Listing {
     // Relationships
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ListingPhoto> photos = new ArrayList<>();
-    
+
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ListingAmenity> amenities = new ArrayList<>();
-    
+
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ListingPreference> preferences = new ArrayList<>();
+
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ListingFavorite> favorites = new ArrayList<>();
 }
